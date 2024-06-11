@@ -9,6 +9,8 @@ readme = "README.md"
 python = "3.11.9"
 django = "^5.0.6"
 djangorestframework = "^3.15.1"
+djoser = "^2.2.3"
+djangorestframework-simplejwt = "^5.3.1"
 
 
 [build-system]

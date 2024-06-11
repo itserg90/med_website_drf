@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -18,7 +19,8 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата и время изменения')
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
-    autor = models.ForeignKey(Autor, on_delete=models.SET_NULL, null=True)
+    autor = models.ForeignKey(Autor, on_delete=models.PROTECT, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
 
     class Meta:
         verbose_name = 'Статья'
