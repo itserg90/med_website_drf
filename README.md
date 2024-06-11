@@ -1,1 +1,1 @@
-# med_website_drf
+<h1>Практика с Django Rest Framework</h1>
