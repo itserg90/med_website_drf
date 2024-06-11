@@ -15,11 +15,27 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include, re_path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
-from med_drf.views import ArticleAPIView
+from med_drf.views import *
+from rest_framework import routers
+
+# router = routers.DefaultRouter()
+# router.register(r'article', ArticleViewSet, basename='article')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/articlelist/', ArticleAPIView.as_view())
+    path('api/v1/drf-auth/', include('rest_framework.urls')),
+    path('api/v1/auth/', include('djoser.urls')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    # path('api/v1/', include(router.urls))
+    # path('api/v1/articlelist/', ArticleViewSet.as_view({'get': 'list'})),
+    # path('api/v1/articlelist/<int:pk>/', ArticleViewSet.as_view({'put': 'update'})),
+    path('api/v1/article/', ArticleAPIList.as_view()),
+    path('api/v1/article/<int:pk>/', ArticleAPIUpdate.as_view()),
+    path('api/v1/articledelete/<int:pk>/', ArticleAPIDestroy.as_view()),
 ]
